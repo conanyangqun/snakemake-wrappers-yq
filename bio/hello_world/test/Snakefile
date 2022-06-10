@@ -1,0 +1,19 @@
+# test hello_world wrappers
+
+rule all:
+    input:
+        ["a.txt", "b.txt"]
+
+rule hello_yangq:
+    output:
+        "a.txt"
+    params:
+        name = "yangqun"
+    wrapper:
+        "master/bio/hello_world"
+
+rule hello:
+    output:
+        "b.txt"
+    wrapper:
+        "master/bio/hello_world"

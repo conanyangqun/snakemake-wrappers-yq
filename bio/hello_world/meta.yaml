@@ -1,0 +1,9 @@
+name: hello_world
+description: a test wrapper. just print hello world or name.
+authors:
+    - yangqun@jabrehoo.com
+input:
+output:
+params:
+    name: give some name.
+notes:
