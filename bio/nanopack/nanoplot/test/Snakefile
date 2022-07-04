@@ -1,0 +1,17 @@
+# test nanoplot.
+
+rule nanoplot_fastq:
+    input:
+        fastqs = ["test.fq.gz"]
+    output:
+        html = "nanoplot/test.NanoPlot-report.html"
+    wrapper:
+        "master/bio/nanopack/nanoplot"
+
+rule nanoplot_bam:
+    input:
+        bams = ["test.bam"]
+    output:
+        html = "nanoplot/test.NanoPlot-report.html"
+    wrapper:
+        "master/bio/nanopack/nanoplot"

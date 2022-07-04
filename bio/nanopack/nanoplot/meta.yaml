@@ -1,0 +1,11 @@
+name: nanoplot
+description: nanoplot from nanopack.
+authors:
+    - yangqun@jabrehoo.com
+input:
+    - fastqs: "input fastqs, not with bams."
+    - bams: "input bams, not with fastqs."
+output:
+    - report: "full path to html summary report. Using for parse outdir and prefix."
+params:
+    - title: "title name in plot."
