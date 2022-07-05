@@ -1,0 +1,17 @@
+name: minimap2
+description: map long-reads to ref and sort using samtools.
+authors:
+    - yangqun@jabrehoo.com
+input:
+    - ref_fa: "ref fasta file."
+    - fqs_fa: "input fastqs or fa file, list."
+output:
+    - out: "sam/bam/paf. using ext .sam, .bam or .paf"
+params:
+    - extras: "extra arguments to minimap2. (optional)"
+    - rg: "read group in format '@RG\\tID:test'. (optional) "
+    - sort_type: "enable sorting if not paf output. can be none, queryname, coordinate(default).(optional)"
+    - sort_extras: "extra arguments to samtools sort. (optioanl)"
+note:
+    "if output bam and sort by coordinate, index out by default."
+ 

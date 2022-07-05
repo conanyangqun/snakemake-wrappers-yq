@@ -1,0 +1,13 @@
+# test minimap2.
+
+rule map_ont:
+    input:
+        ref_fa = "ref.fa",
+        fqs = ["test.fq.gz"]
+    output:
+        out = "test.b37.bam"
+    params:
+        extras = "-x map-ont --MD",
+        rg = 'ID:test\tSM:test',
+    wrapper:
+       "master/bio/minimap2"
