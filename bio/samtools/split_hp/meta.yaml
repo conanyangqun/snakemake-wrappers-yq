@@ -1,0 +1,13 @@
+name: split_hp
+description: split haplotagged bam using samtools and index it.
+authors:
+    - yangqun@jabrehoo.com
+input:
+    - bam: "haplotagged bam (reads with HP tag)."
+output:
+    - hp1_bam: "reads with HP:1 tag."
+    - hp2_bam: "reads with HP:2 tag."
+    - nohp_bam: "reads without HP tag."
+note:
+    "extract hp bams and index it."
+ 
