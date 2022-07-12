@@ -4,7 +4,10 @@ rule nanoplot_fastq:
     input:
         fastqs = ["test.fq.gz"]
     output:
-        html = "nanoplot/test.NanoPlot-report.html"
+        html = "nanoplot_fq/test.NanoPlot-report.html"
+    params:
+        title = "test.fq",
+        extras = "--tsv_stats --N50"
     wrapper:
         "master/bio/nanopack/nanoplot"
 
@@ -12,6 +15,9 @@ rule nanoplot_bam:
     input:
         bams = ["test.bam"]
     output:
-        html = "nanoplot/test.NanoPlot-report.html"
+        html = "nanoplot_bam/test.NanoPlot-report.html"
+    params:
+        title = "test.bam",
+        extras = "--tsv_stats --N50"
     wrapper:
         "master/bio/nanopack/nanoplot"

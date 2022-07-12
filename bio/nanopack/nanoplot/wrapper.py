@@ -8,6 +8,16 @@ from snakemake.shell import shell
 
 fastqs = snakemake.input.get('fastqs', '')
 bams = snakemake.input.get('bams', '')
+out_html = snakemake.output.get('html')
+title = snakemake.params.get('title', '')
+extras = snakemake.params.get('extras', '')
+
+if not out_html.endswith(".NanoPlot-report.html"):
+    sys.exit(
+        "html report must be endswith .NanoPlot-report.html"
+    )
+
+# 准备输入参数
 input_files = ""
 
 if fastqs and bams:
@@ -23,15 +33,14 @@ elif bams and not fastqs:
     # bams
     input_files = "--bam " + "--bam ".join(bams)
 
-out_html = snakemake.output.get('html')
+# 准备输出
 out_prefix = os.path.basename(out_html).replace("NanoPlot-report.html", "")
 out_dir = os.path.dirname(out_html)
 
-title = snakemake.params.get('title', '')
 title = "" if not title else f"--title {title}"
 
 threads = "" if snakemake.threads <= 1 else "-t {}".format(snakemake.threads)
 
 shell(
-    "NanoPlot {threads} -o {out_dir} -p {out_prefix} --tsv_stats --N50 {title} {input_files}"
+    "NanoPlot {threads} -o {out_dir} -p {out_prefix} {extras} {title} {input_files}"
 )

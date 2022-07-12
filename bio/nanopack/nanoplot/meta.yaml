@@ -3,9 +3,10 @@ description: nanoplot from nanopack.
 authors:
     - yangqun@jabrehoo.com
 input:
-    - fastqs: "input fastqs, not with bams."
-    - bams: "input bams, not with fastqs."
+    - fastqs: "input fastqs list, not with bams."
+    - bams: "input bams list, not with fastqs."
 output:
-    - report: "full path to html summary report. Using for parse outdir and prefix."
+    - html: "xxx.NanoPlot-report.html. full path to html summary report. Using for parse outdir and prefix."
 params:
-    - title: "title name in plot."
+    - title: "title name in plot.(optional)"
+    - extras: "extra arguments add to nanoplot.(optional)"
