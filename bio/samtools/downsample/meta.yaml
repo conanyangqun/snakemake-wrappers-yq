@@ -1,0 +1,14 @@
+name: downsample
+description: downsample bam using samtools view.
+authors:
+    - yangqun@jabrehoo.com
+input:
+    - bam: "input bam."
+output:
+    - bam: "downsampled bam."
+    - bai: "bam index.(optional)"
+params:
+    - extras: "-s <float>"
+note:
+    "downsample bam. index it."
+ 
