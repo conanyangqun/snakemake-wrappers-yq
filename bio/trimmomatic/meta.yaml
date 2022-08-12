@@ -1,0 +1,13 @@
+name: trimmomatic
+description: trimmomatic for illumina data.
+authors:
+    - yangqun@jabrehoo.com
+input:
+    - data: "input fastq (list)"
+    - trimmomatic: "trimmomatic jar."
+    - adpaters: "adapter file."
+    - java: "java cmd path. (optional)"    
+output:
+    - outfiles: "4 files or 1 file, list."
+params:
+    - extras: "extra arguments to fastqc. (optional)"
