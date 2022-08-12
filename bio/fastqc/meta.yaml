@@ -1,0 +1,12 @@
+name: fastqc
+description: fastqc software.
+authors:
+    - yangqun@jabrehoo.com
+input:
+    - data: "input fastq, bam or sam. (list, required)"
+    - fastqc: "fastqc_path (optional)."
+    - java: "java cmd path. (optional)"    
+output:
+params:
+    - outdir: "outputdir (optional)"
+    - extras: "extra arguments to fastqc. (optional)"
