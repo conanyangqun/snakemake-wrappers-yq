@@ -1,0 +1,16 @@
+# split bam to hp1 and hp2.
+bam = config['bam']
+out = config['out']
+wrapper_path = config['wrapper'] # wrapper_path
+
+rule split_hp:
+    input:
+        bam = bam
+    output:
+        hp1_bam = out + ".hp1.bam",
+        hp2_bam = out + ".hp2.bam",
+    threads: 5
+    resources:
+        mem_mb = 10000
+    wrapper:
+        "file://" + wrapper_path
