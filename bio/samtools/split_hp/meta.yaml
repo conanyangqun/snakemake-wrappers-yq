@@ -7,7 +7,7 @@ input:
 output:
     - hp1_bam: "reads with HP:1 tag."
     - hp2_bam: "reads with HP:2 tag."
-    - nohp_bam: "reads without HP tag."
+    - nohp_bam: "reads without HP tag(optional)."
 note:
     "extract hp bams and index it."
  
