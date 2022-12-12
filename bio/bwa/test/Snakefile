@@ -1,0 +1,9 @@
+rule bwa_mem:
+    input:
+        ref_fa = "ref.fa",
+        fqs = ["s.R1.fq.gz", 's.R2.fq.gz'],
+    output:
+        bam = "s.bam"
+    params:
+        rg = '@RG\\tID:{s}\\tSM:{s}',
+        bwa_path = "bwa"

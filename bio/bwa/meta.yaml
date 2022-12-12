@@ -1,0 +1,13 @@
+name: bwa
+description: map short-reads to ref and sort using bwa mem.
+authors:
+    - yangqun@jabrehoo.com
+input:
+    - ref_fa: "ref fasta file."
+    - fqs: "input fastq files, list."
+output:
+    - out: "xxx.aligned.unsorted.bam"
+params:
+    - bwa_cmd: "mem -K 100000000 -v 3 -Y. (optional)"
+    - rg: "read group in format '@RG\\tID:test'. (optional)"
+    - bwa_path: "/usr/gitc/bwa (optional)"
