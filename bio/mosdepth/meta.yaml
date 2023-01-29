@@ -1,0 +1,15 @@
+name: mosdepth
+description: fast BAM/CRAM depth calculation for WGS, exome, or targeted sequencing.
+authors:
+    - yangqun
+input:
+    - bam: "input bam file."
+    - bai: "input bam index."
+output:
+    - summary: "xxx.mosdepth.summary.txt."
+params:
+    - mosdepth: "mosdepth path. default mosdepth. (optional)"
+    - by: "bin size or bed file. default none. (optional)"
+    - thresholds: "thresholds. default none. (optional)"
+    - extras: "extra arguments. (optional)"
+note: "parse prefix according summary."
