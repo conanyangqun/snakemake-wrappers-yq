@@ -1,0 +1,14 @@
+name: factcat
+description: This eponymous tool concatenates .fastq(.gz) files whilst creating a summary of the sequences. Can also demultiplex reads according to Guppy/MinKNOW .fastq record headers.
+authors:
+    - yangqun
+input:
+    - fq_or_path: "fastq files or path. If path set, automative give -x."
+output:
+    - out_fq: "output fastq file. if ends with gz, auto compressed. (optional)"
+    - file_summary: "file summary output. (optional)"
+    - read_summary: "read summary outout. (optional)"
+params:
+    - extras: "extra arguments to program."
+    - fastcat: "fastcat path. default is fastcat."
+note: ""
