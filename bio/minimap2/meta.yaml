@@ -1,7 +1,7 @@
 name: minimap2
 description: map long-reads to ref and sort using samtools.
 authors:
-    - yangqun@jabrehoo.com
+    - yangqun
 input:
     - ref_fa: "ref fasta file."
     - fqs_fa: "input fastqs or fa file, list."
