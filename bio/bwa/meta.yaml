@@ -1,13 +1,17 @@
 name: bwa
-description: map short-reads to ref and sort using bwa mem.
+description: map short-reads to ref using bwa mem and sort using samtools sort.
 authors:
-    - yangqun@jabrehoo.com
+    - yangqun
 input:
     - ref_fa: "ref fasta file."
     - fqs: "input fastq files, list."
 output:
-    - out: "xxx.aligned.unsorted.bam"
+    - out: "xxx.[sam,bam]. if bam output, index it automatically."
 params:
     - bwa_cmd: "mem -K 100000000 -v 3 -Y. (optional)"
     - rg: "read group in format '@RG\\tID:test'. (optional)"
     - bwa_path: "/usr/gitc/bwa (optional)"
+    - bwa_extras: "extra arguments to bwa.(optional)"
+    - samtools: "samtools path, default is samtools.(optional)"
+    - sort_type: "can be none, queryname, coordinate(default).(optional)"
+    - sort_extras: "extra arguments to samtools sort.(optional)"
