@@ -1,0 +1,16 @@
+name: chopper
+description: chopper from nanopack.
+authors:
+    - yangqun
+input:
+    - fastq: "single input fastq file. can be gziped.(such as, fastq, fastq.gz, fq, fq.gz)."
+output:
+    - out: "filtered fastq file, same as the input."
+params:
+    - chopper: "path to chopper, (optional). default is chopper."
+    - quality: "minimum Phred average quality score. (optional), default is 0."
+    - min_len: "filter on minimum read length (optional). default is 1."
+    - max_len: "filter on maximum read length (optional). default is 2147483647."
+    - headcrop: "Trim N nucleotides from the start of a read. (optional), default is 0."
+    - tailcrop: "Trim N nucleotides from the end of a read. (optional), default is 0."
+    - extras: "extra arguments to chopper (optional)."
