@@ -1,0 +1,15 @@
+name: kraken2
+description: kraken2 for taxonomic sequence classification.
+authors:
+    - yangqun
+input:
+    - fastq: "single input fastq file. can be gziped.(such as, fastq, fastq.gz, fq, fq.gz)."
+    - db_hash: "kraken2 database hash.k2d file. Wrapper use its dir as database path."
+output:
+    - out: "kraken2 sequence classified result file."
+    - report: "kraken2 sample report file."
+    - unclassified_out: "unclassified reads go to this file.(optional)"
+    - classified_out: "classified reads go to this file.(optional)"
+params:
+    - kraken2: "path to kraken2 program, default is kraken2 (optional)."
+    - extras: "extra arguments to kraken2. (optional)"
