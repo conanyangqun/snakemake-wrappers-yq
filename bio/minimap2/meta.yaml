@@ -3,8 +3,8 @@ description: map long-reads to ref and sort using samtools.
 authors:
     - yangqun
 input:
-    - ref_fa: "ref fasta file."
-    - fqs_fa: "input fastqs or fa file, list."
+    - ref_fa: "ref fasta file or mmi."
+    - fqs_fa: "input fastqs or fa file, list or string."
 output:
     - out: "sam/bam/paf. using ext .sam, .bam or .paf"
 params:
