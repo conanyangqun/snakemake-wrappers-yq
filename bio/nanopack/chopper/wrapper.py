@@ -8,13 +8,21 @@ import sys
 from snakemake.shell import shell
 
 # params.
-if 'fastq' not in snakemake.input.keys():
-    sys.exit("fastq must be given.")
+if 'fastqs' not in snakemake.input.keys():
+    sys.exit("fastqs must be given.")
 if 'out' not in snakemake.output.keys():
     sys.exit('out must be given.')
 
-fastq = snakemake.input.get('fastq')
+fastqs = snakemake.input.get('fastqs')
 out = snakemake.output.get('out')
+
+# check input file extension.
+exts = set([os.path.splitext(x)[-1] for x in fastqs])
+if len(exts) > 1:
+    sys.exit('input file must be only 1 file type.')
+
+ext = exts.pop()
+ext = ext.lower()
 
 # optional params
 chopper = snakemake.params.get('chopper', 'chopper')
@@ -26,7 +34,11 @@ tailcrop = snakemake.params.get('tailcrop', '0')
 extras = snakemake.params.get('extras', '')
 
 # commands.
-input_cmd = f'zcat {fastq}' if fastq.endswith('.gz') else f'cat {fastq}'
+if ext == '.gz':
+    input_cmd = 'zcat {}'.format(' '.join(fastqs))
+else:
+    input_cmd = 'cat {}'.format(' '.join(fastqs))
+
 out_cmd = f' | gzip >{out}' if out.endswith('.gz') else f' >{out}'
 threads_cmd = f'--threads {snakemake.threads}'
 
