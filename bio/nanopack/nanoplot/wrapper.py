@@ -28,10 +28,10 @@ elif not fastqs and not bams:
     sys.exit("Either provide fastqs or bams.")
 elif fastqs and not bams:
     # fastqs
-    input_files = "--fastq " + "--fastq ".join(fastqs)
+    input_files = "--fastq " + " --fastq ".join(fastqs)
 elif bams and not fastqs:
     # bams
-    input_files = "--bam " + "--bam ".join(bams)
+    input_files = "--bam " + " --bam ".join(bams)
 
 # 准备输出
 out_prefix = os.path.basename(out_html).replace("NanoPlot-report.html", "")
