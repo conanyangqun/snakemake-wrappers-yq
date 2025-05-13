@@ -25,7 +25,7 @@ BLACKLIST = {
     "__init__.py",
     "test_wrappers.py",
     ".pytest_cache",
-} | 
+} | SCRIPTS
 
 try:
     TAG = subprocess.check_output(["git", "describe", "--tags"]).decode().strip()
