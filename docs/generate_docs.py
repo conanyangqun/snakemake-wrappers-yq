@@ -25,6 +25,7 @@ BLACKLIST = {
     "__init__.py",
     "test_wrappers.py",
     ".pytest_cache",
+    ".gitkeep",
 } | SCRIPTS
 
 try:
