@@ -109,7 +109,7 @@ def render_wrapper(path, target, wrapper_id):
             env = yaml.load(env, Loader=yaml.BaseLoader)
             if env:
                 # pkgs = env["dependencies"]
-                pkgs = env.get("dependencies". [])
+                pkgs = env.get("dependencies", [])
             else:
                 pkgs = []
     else:
