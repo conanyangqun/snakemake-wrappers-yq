@@ -1,6 +1,5 @@
 # chopper from nanopack.
 __author__ = "yangqun"
-__github__ = "https://github.com/conanyangqun/snakemake-wrappers"
 
 import os
 import sys

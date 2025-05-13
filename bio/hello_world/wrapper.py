@@ -1,5 +1,4 @@
 __author__ = "yangqun"
-__email__ = "yangqun@jabrehoo.com"
 
 import sys
 from snakemake.shell import shell

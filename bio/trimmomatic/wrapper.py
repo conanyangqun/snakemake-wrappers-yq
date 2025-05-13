@@ -1,7 +1,5 @@
 # trimmomatic wrapper
 __author__ = "yangqun"
-__email__ = "yangqun@jabrehoo.com"
-__verison__ = "1.0.0"
 
 import sys
 import os

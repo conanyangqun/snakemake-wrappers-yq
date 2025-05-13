@@ -1,8 +1,6 @@
 # fastcat wrapper.
 
 __author__ = "yangqun"
-__email__ = "yangqunxinli@163.com"
-__verison__ = "1.0.0"
 
 import sys
 import os

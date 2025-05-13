@@ -1,6 +1,5 @@
 # kraken2  taxonomic sequence classification.
 __author__ = "yangqun"
-__github__ = "https://github.com/conanyangqun/snakemake-wrappers"
 
 import os
 import sys
