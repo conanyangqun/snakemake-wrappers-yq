@@ -36,7 +36,7 @@ if "--paired" in extras:
 
 cmd_classified = ""
 if classified_out:
-    cmd_classified += f" --classified_out {classified_out}"
+    cmd_classified += f" --classified-out {classified_out}"
 if unclassified_out:
     cmd_classified += f" --unclassified-out {unclassified_out}"
 
