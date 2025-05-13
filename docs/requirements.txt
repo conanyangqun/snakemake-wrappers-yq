@@ -1,0 +1,7 @@
+sphinx
+sphinxawesome-theme
+sphinx_rtd_theme
+docutils
+pyyaml
+myst-parser
+snowballstemmer<3 # This avoids Sphinx build failure, see https://github.com/sphinx-doc/sphinx/issues/13533
