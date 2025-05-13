@@ -1,5 +1,6 @@
 name: trimmomatic
 description: trimmomatic for illumina data.
+url: http://www.usadellab.org/cms/?page=trimmomatic
 authors:
     - yangqun@jabrehoo.com
 input:

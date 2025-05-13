@@ -1,7 +1,8 @@
 name: hello_world
 description: a test wrapper. just print hello world or name.
+url: https://github.com/conanyangqun/snakemake-wrappers-yq
 authors:
-    - yangqun@jabrehoo.com
+    - yangqun
 input:
 output:
 params:

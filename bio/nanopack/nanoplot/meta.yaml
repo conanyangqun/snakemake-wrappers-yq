@@ -1,7 +1,8 @@
 name: nanoplot
 description: nanoplot from nanopack.
+url: https://github.com/wdecoster/nanoplot
 authors:
-    - yangqun@jabrehoo.com
+    - yangqun
 input:
     - fastqs: "input fastqs list, not with bams."
     - bams: "input bams list, not with fastqs."

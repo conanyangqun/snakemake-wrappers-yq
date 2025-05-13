@@ -1,5 +1,6 @@
 name: kraken2
 description: kraken2 for taxonomic sequence classification.
+url: https://github.com/DerrickWood/kraken2
 authors:
     - yangqun
 input:

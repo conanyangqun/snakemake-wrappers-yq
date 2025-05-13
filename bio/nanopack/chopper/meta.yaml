@@ -1,5 +1,6 @@
 name: chopper
 description: chopper from nanopack.
+url: https://github.com/wdecoster/chopper
 authors:
     - yangqun
 input:

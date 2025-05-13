@@ -1,6 +1,6 @@
 # minimap2 wrapper, modified from snakemake wrapper
 __author__ = "yangqun"
-__email__ = "yangqun@jabrehoo.com"
+__email__ = "yangqunxinli@163.com"
 __verison__ = "1.0.0"
 
 import sys

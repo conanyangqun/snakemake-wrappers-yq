@@ -1,7 +1,8 @@
 name: fastqc
-description: fastqc software.
+description: run fastqc on fastq, bam or sam file.
+url: https://www.bioinformatics.babraham.ac.uk/projects/fastqc/
 authors:
-    - yangqun@jabrehoo.com
+    - yangqun
 input:
     - data: "input fastq, bam or sam. (list, required)"
     - fastqc: "fastqc_path (optional)."

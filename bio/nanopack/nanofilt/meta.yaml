@@ -1,5 +1,6 @@
 name: nanofilt
 description: nanofilt from nanopack.
+url: https://github.com/wdecoster/nanofilt
 authors:
     - yangqun
 input:

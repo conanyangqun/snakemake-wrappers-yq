@@ -1,5 +1,6 @@
 name: minimap2
 description: map long-reads to ref and sort using samtools.
+url: https://github.com/lh3/minimap2
 authors:
     - yangqun
 input:

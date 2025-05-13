@@ -1,5 +1,6 @@
 name: mosdepth
 description: fast BAM/CRAM depth calculation for WGS, exome, or targeted sequencing.
+url: https://github.com/brentp/mosdepth
 authors:
     - yangqun
 input:

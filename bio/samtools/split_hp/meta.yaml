@@ -1,7 +1,8 @@
 name: split_hp
 description: split haplotagged bam using samtools and index it.
+url: https://github.com/samtools/samtools
 authors:
-    - yangqun@jabrehoo.com
+    - yangqun
 input:
     - bam: "haplotagged bam (reads with HP tag)."
 output:
@@ -10,4 +11,3 @@ output:
     - nohp_bam: "reads without HP tag(optional)."
 note:
     "extract hp bams and index it."
- 

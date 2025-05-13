@@ -1,12 +1,13 @@
-name: bwa
-description: map short-reads to ref using bwa mem and sort using samtools sort.
+name: bwa mem
+description: map short reads to ref using bwa mem and sort using samtools sort.
+url: https://github.com/lh3/bwa
 authors:
     - yangqun
 input:
     - ref_fa: "ref fasta file."
     - fqs: "input fastq files, list."
 output:
-    - out: "xxx.[sam,bam]. if bam output, index it automatically."
+    - out: "xxx.[sam|bam]. if bam output, index it automatically."
 params:
     - bwa_cmd: "mem -K 100000000 -v 3 -Y. (optional)"
     - rg: "read group in format '@RG\\tID:test'. (optional)"

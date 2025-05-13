@@ -1,7 +1,8 @@
 name: downsample
 description: downsample bam using samtools view.
+url: https://github.com/samtools/samtools
 authors:
-    - yangqun@jabrehoo.com
+    - yangqun
 input:
     - bam: "input bam."
 output:
