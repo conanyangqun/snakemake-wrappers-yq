@@ -10,6 +10,8 @@ snakemake-wrappers-yq是我根据官方的wrappers仓库实现的一个仓库，
 - 本仓库只实现了基本的wrappers，未纳入测试等内容。因此无法像官方一样执行CI测试（后续考虑增加）。
 - 本仓库每个wrapper的`environment.yaml`为空。这主要是因为我在日常开发中主要用docker/singularity容器打包软件环境，对conda用的较少。
 
+**请注意，本项目正处于快速迭代中，尚未发布 (v0.y.z) 版本号**。
+
 ## wrappers-list
 
 当前已经实现的wrappers列表。

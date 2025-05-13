@@ -127,3 +127,11 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# snakemake
+docs/wrappers
+.snakemake
+docs/_build
+
+# macos
+.DS_Store
