@@ -1,15 +1,17 @@
 
-The Snakemake Wrappers repository
+The Snakemake Wrappers repository by YangQun
 =================================
 
 .. image:: https://img.shields.io/badge/snakemake-≥5.7.0-brightgreen.svg?style=flat-square
       :target: http://snakemake.readthedocs.io
 
 .. image:: https://github.com/snakemake/snakemake-wrappers/workflows/Tests/badge.svg?branch=master
-      :target: https://github.com/snakemake/snakemake-wrappers/actions?query=branch%3Amaster+workflow%3ATests
+      :target: https://github.com/conanyangqun/snakemake-wrappers-yq/actions?query=branch%3Amaster+workflow%3ATests
 
 The Snakemake Wrapper Repository is a collection of reusable wrappers that allow to quickly use popular tools
 from `Snakemake <https://snakemake.readthedocs.io>`_ rules and workflows.
+
+This is a repository made by YangQun, not the official one.
 
 Usage
 -----
@@ -58,11 +60,7 @@ For the above example, the explicit GitHub URL to specify would need to be the `
 Maintainers
 -----------
 
-- Johannes Köster (`johanneskoester <https://github.com/johanneskoester>`_)
-- Filipe G. Vieira (`fgvieira <https://github.com/fgvieira>`_)
-- Thibault Dayris (`tdayris <https://github.com/tdayris>`_)
-- Felix Mölder (`FelixMoelder <https://github.com/FelixMoelder>`_)
-- David Laehnemann (`dlaehnemann <https://github.com/dlaehnemann>`_)
+- YangQun (`yangqun <https://github.com/conanyangqun>`)
 
 
 Contributing
