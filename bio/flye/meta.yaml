@@ -1,0 +1,15 @@
+name: flye.
+description: Flye is a de novo assembler for single molecule sequencing reads.
+url: https://github.com/mikolmogorov/Flye
+authors:
+    - yangqun (yangqun https://github.com/conanyangqun )
+input:
+    - data: "(required). input fastq or fasta files, single file or ',' seperated multiple files, must be same type(PB or ONT)."
+output:
+    - fasta: "(required). path to assembly.fasta, must be named assembly.fasta. we use this file to decide output dir. eg, /xxx/assembly.fasta"
+params:
+    - input_type: "(required). data type, must be of pacbio-raw, pacbio-corr, pacbio-hifi, nano-raw, nano-corr, nano-hq."
+    - extras: "extra arguments to program."
+    - flye: "flye path. default is flye."
+notes:
+    "we use fasta file to decide output dir, and puts all results there. So, you can define any output file in outout."

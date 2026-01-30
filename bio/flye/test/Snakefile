@@ -1,0 +1,61 @@
+# flye test case
+# this is a minimal test case, can be called from other working directory.
+# usage is : snakemake --cores -s /xxx/Snakefile --config fastq=xxx,s_id=xxx,data_type=xxx,sample_info=xxx,out_dir=xxx
+# --wrapper-prefix file:///xxx/snakemake-wrappers-yq/
+
+import csv
+import os
+
+# todo. move this to a common utils.
+fastq = config.get('fastq', None)
+sample_id = config.get('s_id', "test")
+data_type = config.get('data_type', "nano-raw")
+sample_info = config.get('sample_info', None) # tsv file, with s_id, data_type, R1 as headers.
+out_dir = config.get('out_dir', os.getcwd())
+
+samples = {} # s_id: R1
+if fastq or sample_info:
+    if fastq:
+        samples[sample_id] = (data_type, fastq)
+    elif sample_info:
+        with open(sample_info, 'r') as f:
+            reader = csv.DictReader(f, delimiter='\t')
+            for row in reader:
+                samples[row['s_id']] = (row['data_type'], row['R1'])
+    else:
+        raise ValueError(f"fastq or sample_info must be provided, but got {fastq} and {sample_info}")
+else:
+    # demo.
+    samples['demo'] = ('nano-raw', os.path.join(out_dir, "demo.fasta"))
+
+# rules.
+rule all:
+    input:
+        fastas = [os.path.join(out_dir, s_id, "assembly.fasta") for s_id in samples.keys()]
+
+rule download_demo:
+    output:
+        demo_fasta = os.path.join(out_dir, "demo.fasta")
+    shell:
+        """
+        if command -v wget >/dev/null 2>&1; then
+            wget https://zenodo.org/record/1172816/files/Loman_E.coli_MAP006-1_2D_50x.fasta
+        elif command -v curl >/dev/null 2>&1; then
+            curl -L -o Loman_E.coli_MAP006-1_2D_50x.fasta https://zenodo.org/record/1172816/files/Loman_E.coli_MAP006-1_2D_50x.fasta
+        else
+            echo "wget or curl is required to download demo data"
+            exit 1
+        fi
+        mv Loman_E.coli_MAP006-1_2D_50x.fasta {output.demo_fasta}
+        """
+
+rule flye_ont_data:
+    input:
+        data = lambda wc: samples[wc.s_id][1],
+    output:
+        fasta = os.path.join(out_dir, "{s_id}", "assembly.fasta")
+    params:
+        input_type = lambda wc: samples[wc.s_id][0],
+        extras = "-i 5",
+    wrapper:
+        "bio/flye"
