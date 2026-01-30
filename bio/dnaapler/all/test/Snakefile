@@ -1,0 +1,58 @@
+# dnaapler test case
+# this is a minimal test case, can be called from other working directory.
+# usage is : snakemake --cores -s /xxx/Snakefile --config s_id=xxx input_file=xxx sample_info=xxx out_dir=xxx
+# --wrapper-prefix file:///xxx/snakemake-wrappers-yq/
+
+import csv
+import os
+
+# todo. move this to a common utils.
+sample_info = config.get('sample_info', None) # tsv file, with s_id, input_file
+input_file = config.get('input_file', None)
+sample_id = config.get('s_id', None)
+out_dir = config.get('out_dir', os.getcwd())
+
+samples = {} # s_id: (input_file, ext)
+if input_file or sample_info:
+    if input_file:
+        samples[sample_id] = (input_file, os.path.splitext(input_file)[1])
+    elif sample_info:
+        with open(sample_info, 'r') as f:
+            reader = csv.DictReader(f, delimiter='\t')
+            for row in reader:
+                samples[row['s_id']] = (row['input_file'], os.path.splitext(row['input_file'])[1])
+    else:
+        raise ValueError(f"input_file or sample_info must be provided, but got {input_file} and {sample_info}")
+else:
+    # demo.
+    samples['demo'] = (os.path.join(out_dir, "demo.fasta"), ".fasta")
+
+# rules.
+rule all:
+    input:
+        out_files = [os.path.join(out_dir, s_id, f"{s_id}_reoriented{samples[s_id][1]}") for s_id in samples.keys()]
+
+rule download_demo:
+    output:
+        demo_fasta = os.path.join(out_dir, "demo.fasta")
+    shell:
+        """
+        URL='https://github.com/gbouras13/dnaapler/raw/refs/heads/main/tests/test_data/NC_007458.fasta'
+        if command -v wget >/dev/null 2>&1; then
+            wget ${{URL}}
+        elif command -v curl >/dev/null 2>&1; then
+            curl -L -o NC_007458.fasta ${{URL}}
+        else
+            echo "wget or curl is required to download demo data"
+            exit 1
+        fi
+        mv NC_007458.fasta {output.demo_fasta}
+        """
+
+rule dnaapler_all:
+    input:
+        input_file = lambda wc: samples[wc.s_id][0],
+    output:
+        out_file = os.path.join(out_dir, "{s_id}", "{s_id}_reoriented{ext}")
+    wrapper:
+        "bio/dnaapler/all"

@@ -176,3 +176,16 @@ def test_flye(run):
             "all"
         ]
     )
+
+def test_dnaapler_all(run):
+    run(
+        "bio/dnaapler/all",
+        [
+            "snakemake",
+            "--cores",
+            "1",
+            "--use-conda",
+            "-F",
+            "all"
+        ]
+    )

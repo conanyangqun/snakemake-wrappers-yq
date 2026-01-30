@@ -1,0 +1,15 @@
+name: dnaapler
+description: Reorients assembled microbial sequences
+url: https://github.com/gbouras13/dnaapler
+authors:
+    - yangqun (yangqun https://github.com/conanyangqun )
+input:
+    - input_file: "(required). input fasta or gfa file, single one."
+output:
+    - out_file: "(required). path to {prefix}_reoriented.fasta or gfa, must be ended with _reoriented.fasta or gfa. We use this file to decide output dir and prefix. Please use a empty outdir!!! eg, /xxx/test_reoriented.fasta"
+params:
+    - extras: "(optional). extra arguments to program."
+    - dnaapler: "(optional). dnaapler path. default is dnaapler."
+notes:
+    - "Pay attentiion! dnaapler will delete the output dir! As snakemake will automatically create the missing output dir, so we use -f option"
+    - "If you specify prefix in extras, we will use it."
