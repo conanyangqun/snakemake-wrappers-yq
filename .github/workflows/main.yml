@@ -49,16 +49,16 @@ jobs:
           conda config --set channel_priority strict
           conda install -n snakemake -y snakemake-minimal snakemake-storage-plugin-http pytest pandas
 
-      - name: Fetch master
-        if: github.ref != 'refs/heads/master'
+      - name: Fetch main
+        if: github.ref != 'refs/heads/main'
         run: |
-          git fetch origin master
+          git fetch origin main
 
       - name: Run tests
         shell: bash -el {0}
         env:
           DIFF_MASTER: ${{ github.event_name == 'pull_request' }}
-          DIFF_LAST_COMMIT: ${{ github.ref == 'refs/heads/master' }}
+          DIFF_LAST_COMMIT: ${{ github.ref == 'refs/heads/main' }}
         run: |
           # run tests
           pytest -v test_wrappers.py

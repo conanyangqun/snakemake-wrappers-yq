@@ -10,11 +10,12 @@ import yaml
 import filecmp
 from itertools import chain
 
+BRANCH_NAME = 'main'
 DIFF_MASTER = os.environ.get("DIFF_MASTER", "false") == "true"
 DIFF_LAST_COMMIT = os.environ.get("DIFF_LAST_COMMIT", "false") == "true"
 
 if DIFF_MASTER or DIFF_LAST_COMMIT:
-    compare = "HEAD^" if DIFF_LAST_COMMIT else "origin/main"
+    compare = "HEAD^" if DIFF_LAST_COMMIT else f"origin/{BRANCH_NAME}"
 
     # check if wrapper is modified compared to master
     DIFF_FILES = set(
@@ -59,7 +60,7 @@ def run(tmp_test_dir):
         if meta.get("blacklisted"):
             pytest.skip("wrapper blacklisted")
 
-        dst = tmp_test_subdir / "master"
+        dst = tmp_test_subdir / BRANCH_NAME
 
         os.symlink(origdir, dst)
 
@@ -104,7 +105,7 @@ def run(tmp_test_dir):
             # meta-wrappers define their specific wrapper versions
             cmd += [
                 "--wrapper-prefix",
-                f"file://{tmp_test_subdir}/master/",
+                f"file://{tmp_test_subdir}/{BRANCH_NAME}/",
             ]
 
 
