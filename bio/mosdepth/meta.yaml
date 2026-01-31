@@ -1,0 +1,15 @@
+name: mosdepth
+description: fast BAM/CRAM depth calculation for WGS, exome, or targeted sequencing.
+url: https://github.com/brentp/mosdepth
+authors:
+    - yangqun (yangqun https://github.com/conanyangqun )
+    - TRAE (TRAE https://www.trae.cn/ )
+input:
+    - bam: "(required). input bam or cram file, must be sorted by coordinate."
+output:
+    - summary: "(required) output summary file. Must end with .mosdepth.summary.txt. We use this to decide output dir and prefix name."
+params:
+    - extras: "(optional). extra arguments to program."
+    - mosdepth: "(optional). mosdepth path. default is mosdepth."
+notes:
+    ""

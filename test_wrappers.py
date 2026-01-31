@@ -202,3 +202,16 @@ def test_bamstats_histogram(run):
             "all"
         ]
     )
+
+def test_mosdepth(run):
+    run(
+        "bio/mosdepth",
+        [
+            "snakemake",
+            "--cores",
+            "1",
+            "--use-conda",
+            "-F",
+            "all"
+        ]
+    )

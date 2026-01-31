@@ -135,3 +135,6 @@ docs/_build
 
 # macos
 .DS_Store
+
+# TRAE
+.trae
