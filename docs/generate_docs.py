@@ -10,23 +10,22 @@ WRAPPER_DIR = os.path.dirname(BASE_DIR)
 OUTPUT_DIR = os.path.join(BASE_DIR, "wrappers")
 META_OUTPUT_DIR = os.path.join(BASE_DIR, "meta-wrappers")
 SCRIPTS = {"wrapper.py", "wrapper.R"}
-BLACKLIST = {
-    ".snakemake",
-    ".circleci",
-    "wercker.yml",
-    "docs",
-    "__pycache__",
-    "environment.yaml",
-    ".git",
-    ".github",
-    ".gitignore",
-    "README.md",
-    ".cache",
-    "__init__.py",
-    "test_wrappers.py",
-    ".pytest_cache",
-    ".gitkeep",
-} | SCRIPTS
+
+# BLACKLIST 集合用于在扫描目录时排除不需要处理的文件或目录。
+# 它包含两部分：
+# 1. 固定的字符串集合：如版本控制目录（.git、.github）、CI 配置文件（.circleci、wercker.yml）、
+#    缓存目录（__pycache__、.cache）、测试相关文件（test_wrappers.py、.pytest_cache）等。
+# 2. SCRIPTS 集合：即 {"wrapper.py", "wrapper.R"}，这两个是脚本文件本身，也不应被当作工具目录处理。
+# 最终 BLACKLIST = 固定集合 ∪ SCRIPTS，确保后续遍历时跳过这些名字。
+# 从 blacklist.yaml 读取黑名单条目
+blacklist_yaml_path = os.path.join(BASE_DIR, "blacklist.yaml")
+if os.path.isfile(blacklist_yaml_path):
+    with open(blacklist_yaml_path, encoding="utf-8") as f:
+        black_entries = yaml.safe_load(f) or []
+else:
+    black_entries = []
+
+BLACKLIST = set(black_entries) | SCRIPTS
 
 try:
     TAG = subprocess.check_output(["git", "describe", "--tags"]).decode().strip()
