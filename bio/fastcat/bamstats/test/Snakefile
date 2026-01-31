@@ -1,0 +1,61 @@
+# bamstats test case.
+# this is a mini-workflow, can be called from other working directory.
+# usage is: 
+# snakemake --cores -s /xxx/Snakefile --config bam=xxx,s_id=xxx,sample_info=xxx,out_dir=xxx
+# --wrapper-prefix file:///xxx/snakemake-wrappers-yq/
+
+import csv
+import os
+
+# todo. move this to a common utils.
+bam = config.get('bam', None)
+sample_id = config.get('s_id', "test")
+sample_info = config.get('sample_info', None) # tsv file, with s_id, bam
+out_dir = config.get('out_dir', os.getcwd())
+
+samples = {} # s_id: bam
+if bam or sample_info:
+    if bam:
+        samples[sample_id] = bam
+    elif sample_info:
+        with open(sample_info, 'r') as f:
+            reader = csv.DictReader(f, delimiter='\t')
+            for row in reader:
+                samples[row['s_id']] = row['bam']
+    else:
+        raise ValueError(f"bam or sample_info must be provided, but got {bam} and {sample_info}")
+else:
+    # demo.
+    samples['demo'] = os.path.join(out_dir, "demo.bam")
+
+# rules.
+rule all:
+    input:
+        tsvs = [os.path.join(out_dir, s_id, "bamstats.tsv") for s_id in samples.keys()]
+
+rule download_demo:
+    output:
+        demo_bam = os.path.join(out_dir, "demo.bam")
+    shell:
+        """
+        URL='https://github.com/epi2me-labs/fastcat/raw/refs/heads/master/test/bamstats/RCS-100A.bam'
+        if command -v wget >/dev/null 2>&1; then
+            wget ${{URL}}
+        elif command -v curl >/dev/null 2>&1; then
+            curl -L -o RCS-100A.bam ${{URL}}
+        else
+            echo "wget or curl is required to download demo data"
+            exit 1
+        fi
+        mv RCS-100A.bam {output.demo_bam}
+        """
+
+rule bamstats_histogram:
+    input:
+        bam = lambda wc: samples[wc.s_id],
+    output:
+        tsv = os.path.join(out_dir, "{s_id}", "bamstats.tsv")
+    params:
+        extras = "-s {s_id} ",
+    wrapper:
+        "bio/fastcat/bamstats"

@@ -189,3 +189,16 @@ def test_dnaapler_all(run):
             "all"
         ]
     )
+
+def test_bamstats_histogram(run):
+    run(
+        "bio/fastcat/bamstats",
+        [
+            "snakemake",
+            "--cores",
+            "1",
+            "--use-conda",
+            "-F",
+            "all"
+        ]
+    )

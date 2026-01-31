@@ -1,0 +1,14 @@
+name: fastcat.bamstats
+description: creates read-level summary statistics of alignments found in a BAM file and reports these in a TSV file.
+url: https://github.com/epi2me-labs/fastcat
+authors:
+    - yangqun (yangqun https://github.com/conanyangqun )
+input:
+    - bam: "(required) input bam file."
+output:
+    - tsv: "(required) output tsv file. We use this to decide output dir, and put histogram there."
+params:
+    - extras: "(optional) extra arguments to program."
+    - bamstats: "(optional) bamstats path. default is bamstats."
+notes:
+    histogram and coverage directory must not exist, or program will fail.
