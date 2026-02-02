@@ -15,4 +15,4 @@ params:
     - bakta: "(optional). bakta path. default is bakta."
 demo: https://github.com/oschwengers/bakta/raw/refs/heads/main/test/data/NC_002127.1.fna
 notes:
-    ""
+    "Install bakta using conda raise many errors. So we remove version from environment.yaml."

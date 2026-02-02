@@ -14,4 +14,4 @@ params:
     - mob_recon: "(optional). mob_recon path. default is mob_recon."
 demo: https://github.com/phac-nml/mob-suite/raw/refs/heads/master/mob_suite/example/assembly_no_biomarkers.fasta
 notes:
-    ""
+    "Install 3.1.9 using conda raise an error, requires ete3 >=3.1.3. So we remove version from environment.yaml."
