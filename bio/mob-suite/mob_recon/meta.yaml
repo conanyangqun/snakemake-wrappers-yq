@@ -8,7 +8,7 @@ authors:
 input:
     - fasta: "(required). Input fasta file."
 output:
-    - contig_report: "(required). Output contig report file. We use this file to decide output dir."
+    - contig_report: "(required). Output contig report file. We use this file to decide output dir. Please use an empty directory. We use --force option to force overwrite."
 params:
     - extras: "(optional). extra arguments to program."
     - mob_recon: "(optional). mob_recon path. default is mob_recon."

@@ -32,5 +32,5 @@ log = snakemake.log_fmt_shell(stdout=True, stderr=True)
 
 # 执行命令
 shell(
-    "{mob_recon} {threads_cmd} {extras} -i {input_fasta} -o {output_dir} {log}"
+    "{mob_recon} --force {threads_cmd} {extras} -i {input_fasta} -o {output_dir} {log}"
 )
