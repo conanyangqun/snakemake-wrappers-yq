@@ -42,5 +42,5 @@ pre_cmd = f"export AMRFINDERPLUS_DB={db_path}/amrfinderplus-db"
 
 # 执行命令
 shell(
-    "{pre_cmd} && {bakta} {threads_cmd} {extras} --db {db_path} --output {output_dir} --prefix {output_prefix} {input_fasta} {log}"
+    "{pre_cmd} && {bakta} --force {threads_cmd} {extras} --db {db_path} --output {output_dir} --prefix {output_prefix} {input_fasta} {log}"
 )

@@ -7,9 +7,9 @@ authors:
     - TRAE (TRAE https://www.trae.cn/ )
 input:
     - fasta: "(required). Input fasta file."
-    - db_version_json: "(required). Bakta database version json file. We use this file parent directory to decide db path."
+    - db_version_json: "(required). Bakta database version json file. We use this file parent directory to decide db path. "
 output:
-    - json: "(required). Output json file. We use this file to decide output dir and prefix."
+    - json: "(required). Output json file. We use this file to decide output dir and prefix. Please use an empty directory. We use --force option to force overwrite."
 params:
     - extras: "(optional). extra arguments to program."
     - bakta: "(optional). bakta path. default is bakta."
