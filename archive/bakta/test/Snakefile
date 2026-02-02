@@ -1,0 +1,35 @@
+# Test cases for bakta wrapper
+
+# Test with demo data from meta.yaml
+rule test_bakta_demo:
+    input:
+        fasta="NC_002127.1.fna",
+        db="bakta_db"
+    output:
+        json="test_output/test_bakta_demo.json"
+    params:
+        extras="--threads 1"
+    threads: 1
+    wrapper:
+        "../"
+
+# Rule to download demo data from the URL specified in meta.yaml
+rule download_demo_data:
+    output:
+        "NC_002127.1.fna"
+    shell:
+        "wget -O {output} https://github.com/oschwengers/bakta/raw/refs/heads/main/test/data/NC_002127.1.fna"
+
+# Rule to create dummy database directory (for testing purposes)
+rule create_dummy_db:
+    output:
+        directory("bakta_db")
+    shell:
+        "mkdir -p {output}"
+
+# Rule to create output directory
+rule create_output_dir:
+    output:
+        directory("test_output")
+    shell:
+        "mkdir -p {output}"

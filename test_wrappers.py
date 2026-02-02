@@ -215,3 +215,30 @@ def test_mosdepth(run):
             "all"
         ]
     )
+
+
+def test_bakta(run):
+    run(
+        "bio/bakta/bakta",
+        [
+            "snakemake",
+            "--cores",
+            "1",
+            "--use-conda",
+            "-F",
+            "all"
+        ]
+    )
+
+def test_mob_recon(run):
+    run(
+        "bio/mob-suite/mob_recon",
+        [
+            "snakemake",
+            "--cores",
+            "1",
+            "--use-conda",
+            "-F",
+            "all"
+        ]
+    )

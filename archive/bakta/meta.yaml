@@ -1,0 +1,18 @@
+name: bakta
+description: Rapid & standardized annotation of bacterial genomes, MAGs & plasmids
+url: https://github.com/oschwengers/bakta
+version: 1.12
+authors:
+    - yangqun (yangqun https://github.com/conanyangqun )
+    - TRAE (TRAE https://www.trae.cn/ )
+input:
+    - fasta: "(required). Input fasta file."
+    - db: "(required). Bakta database path."
+output:
+    - json: "(required). Output json file. We use this file to decide output dir and prefix."
+params:
+    - extras: "(optional). extra arguments to program."
+    - bakta: "(optional). bakta path. default is bakta."
+demo: https://github.com/oschwengers/bakta/raw/refs/heads/main/test/data/NC_002127.1.fna
+notes:
+    ""

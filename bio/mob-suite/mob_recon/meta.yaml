@@ -1,0 +1,17 @@
+name: mob_recon
+description: Reconstructs mobile elements from a set of contigs
+url: https://github.com/oschwengers/mob-suite
+version: 3.1.9
+authors:
+    - yangqun (yangqun https://github.com/conanyangqun )
+    - TRAE (TRAE https://www.trae.cn/ )
+input:
+    - fasta: "(required). Input fasta file."
+output:
+    - contig_report: "(required). Output contig report file. We use this file to decide output dir."
+params:
+    - extras: "(optional). extra arguments to program."
+    - mob_recon: "(optional). mob_recon path. default is mob_recon."
+demo: https://github.com/phac-nml/mob-suite/raw/refs/heads/master/mob_suite/example/assembly_no_biomarkers.fasta
+notes:
+    ""

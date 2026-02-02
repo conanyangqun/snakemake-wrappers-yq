@@ -1,0 +1,91 @@
+# bakta test case
+# This is a mini-workflow, can be called from other working directory.
+# Usage: 
+# snakemake --cores -s /xxx/Snakefile --config fasta=xxx db_version_json=xxx s_id=xxx sample_info=xxx out_dir=xxx
+# --wrapper-prefix file:///xxx/snakemake-wrappers-yq/
+
+import csv
+import os
+
+# Get parameters from config
+fasta = config.get('fasta', None)
+db_version_json = config.get('db_version_json', None)
+sample_id = config.get('s_id', "test")
+sample_info = config.get('sample_info', None) # tsv file, with s_id, fasta, db_version_json
+samples = {} # s_id: (fasta, db_version_json)
+out_dir = config.get('out_dir', os.getcwd())
+db_light_version_json = os.path.join(out_dir, 'db-light', 'version.json')
+
+# Samples dictionary
+if fasta or sample_info:
+    if fasta:
+        samples[sample_id] = (fasta, db_light_version_json) if not db_version_json else (fasta, db_version_json)
+    elif sample_info:
+        with open(sample_info, 'r') as f:
+            reader = csv.DictReader(f, delimiter='\t')
+            for row in reader:
+                samples[row['s_id']] = (row['fasta'], db_light_version_json) if not row['db_version_json'] else (row['fasta'], row['db_version_json'])
+    else:
+        raise ValueError(f"fasta or sample_info must be provided, but got {fasta} and {sample_info}")
+else:
+    # Demo case
+    samples['demo'] = (os.path.join(out_dir, "demo.fasta"), db_light_version_json)
+
+# Rules
+rule all:
+    input:
+        jsons = [os.path.join(out_dir, s_id, f"{s_id}.json") for s_id in samples.keys()]
+
+rule download_demo:
+    output:
+        demo_fasta = os.path.join(out_dir, "demo.fasta")
+    shell:
+        """
+        FASTA_URL='https://github.com/oschwengers/bakta/raw/refs/heads/main/test/data/NC_002127.1.fna'
+        
+        # Download FASTA file
+        if command -v wget >/dev/null 2>&1; then
+            wget -O demo.fasta ${{FASTA_URL}}
+        elif command -v curl >/dev/null 2>&1; then
+            curl -L -o demo.fasta ${{FASTA_URL}}
+        else
+            echo "wget or curl is required to download demo data"
+            exit 1
+        fi
+        
+        mv demo.fasta {output.demo_fasta}
+        """
+
+rule download_light_db:
+    output:
+        db_version_json = os.path.join(out_dir, "db-light", "version.json")
+    shell:
+        """
+        DB_URL='https://zenodo.org/records/14916843/files/db-light.tar.xz'
+
+        # Download DB file
+        if command -v wget >/dev/null 2>&1; then
+            wget -O db-light.tar.xz "$DB_URL"
+        elif command -v curl >/dev/null 2>&1; then
+            curl -L -o db-light.tar.xz "$DB_URL"
+        else
+            echo "wget or curl is required to download light db."
+            exit 1
+        fi
+        
+        # Extract the database
+        tar -xvf db-light.tar.xz && rm db-light.tar.xz
+        """
+
+# Define run_bakta rule
+rule run_bakta:
+    input:
+        fasta = lambda wc: samples[wc.s_id][0],
+        db_version_json = lambda wc: samples[wc.s_id][1],
+    output:
+        json = os.path.join(out_dir, "{s_id}", "{s_id}.json")
+    threads: 1
+    params:
+        extras = "",
+    wrapper:
+        "bio/bakta/bakta"
