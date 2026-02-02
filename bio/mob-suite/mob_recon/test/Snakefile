@@ -32,7 +32,7 @@ else:
 # Rules
 rule all:
     input:
-        contig_reports = [os.path.join(out_dir, s_id, f"{s_id}_contig_report.tsv") for s_id in samples.keys()]
+        contig_reports = [os.path.join(out_dir, s_id, "contig_report.tsv") for s_id in samples.keys()]
 
 rule download_demo:
     output:
