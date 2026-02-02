@@ -52,8 +52,6 @@ rule download_demo:
             echo "wget or curl is required to download demo data"
             exit 1
         fi
-        
-        mv demo.fasta {output.demo_fasta}
         """
 
 rule download_light_db:
