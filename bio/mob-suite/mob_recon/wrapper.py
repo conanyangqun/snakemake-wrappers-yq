@@ -15,6 +15,8 @@ input_fasta = snakemake.input['fasta']
 # 处理输出参数
 assert "contig_report" in snakemake.output.keys()
 contig_report = snakemake.output['contig_report']
+contig_report_basename = os.path.basename(contig_report)
+assert contig_report_basename == "contig_report.txt", "contig_report file name must be 'contig_report.txt'"
 
 # 从输出文件路径中提取目录
 output_dir = os.path.dirname(os.path.abspath(contig_report))

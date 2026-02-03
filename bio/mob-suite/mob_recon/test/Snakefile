@@ -59,7 +59,7 @@ rule run_mob_recon:
     input:
         fasta = lambda wc: samples[wc.s_id]
     output:
-        contig_report = os.path.join(out_dir, "{s_id}", "contig_report.tsv")
+        contig_report = os.path.join(out_dir, "{s_id}", "contig_report.txt")
     threads: 4
     params:
         extras = "",
