@@ -39,6 +39,7 @@ rule all:
 rule download_demo:
     output:
         demo_fasta = os.path.join(out_dir, "demo.fasta")
+    log: os.path.join(out_dir, "logs", "download_demo.log")
     shell:
         """
         FASTA_URL='https://github.com/oschwengers/bakta/raw/refs/heads/main/test/data/NC_002127.1.fna'
@@ -57,6 +58,7 @@ rule download_demo:
 rule download_light_db:
     output:
         db_version_json = os.path.join(out_dir, "db-light", "version.json")
+    log: os.path.join(out_dir, "logs", "download_light_db.log")
     shell:
         """
         DB_URL='https://zenodo.org/records/14916843/files/db-light.tar.xz'
@@ -85,5 +87,6 @@ rule run_bakta:
     threads: 1
     params:
         extras = "",
+    log: os.path.join(out_dir, "logs", "{s_id}.run_bakta.log")
     wrapper:
         "bio/bakta/bakta"

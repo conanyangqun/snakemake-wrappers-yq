@@ -38,9 +38,12 @@ threads_cmd = f"--threads {threads}"
 log = snakemake.log_fmt_shell(stdout=True, stderr=True)
 
 # 特殊处理
-pre_cmd = f"export AMRFINDERPLUS_DB={db_path}/amrfinderplus-db"
+amrfinderplus_db = os.path.join(db_path, "amrfinderplus-db")
+pre_cmd = f"amrfinderplus --force_update --database {amrfinderplus_db}"
 
 # 执行命令
 shell(
-    "{pre_cmd} && {bakta} --force {threads_cmd} {extras} --db {db_path} --output {output_dir} --prefix {output_prefix} {input_fasta} {log}"
+    "({pre_cmd} && "
+    "{bakta} --force {threads_cmd} {extras} --db {db_path} --output {output_dir} --prefix {output_prefix} {input_fasta}) "
+    "{log}"
 )
