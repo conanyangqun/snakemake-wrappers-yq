@@ -37,21 +37,22 @@ rule all:
 rule download_demo:
     output:
         demo_fasta = os.path.join(out_dir, "demo.fasta")
+    log: os.path.join(out_dir, "logs", "download_demo.log")
     shell:
         """
         FASTA_URL='https://github.com/phac-nml/mob-suite/raw/refs/heads/master/mob_suite/example/assembly_no_biomarkers.fasta'
         
         # Download FASTA file
         if command -v wget >/dev/null 2>&1; then
-            wget -O demo.fasta ${{FASTA_URL}}
+            wget -O assembly_no_biomarkers.fasta ${{FASTA_URL}}
         elif command -v curl >/dev/null 2>&1; then
-            curl -L -o demo.fasta ${{FASTA_URL}}
+            curl -L -o assembly_no_biomarkers.fasta ${{FASTA_URL}}
         else
             echo "wget or curl is required to download demo data"
             exit 1
         fi
         
-        mv demo.fasta {output.demo_fasta}
+        mv assembly_no_biomarkers.fasta {output.demo_fasta}
         """
 
 rule run_mob_recon:
@@ -62,5 +63,6 @@ rule run_mob_recon:
     threads: 4
     params:
         extras = "",
+    log: os.path.join(out_dir, "logs", "{s_id}.run_mob_recon.log")
     wrapper:
         "bio/mob-suite/mob_recon"
