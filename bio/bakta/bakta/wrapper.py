@@ -39,7 +39,7 @@ log = snakemake.log_fmt_shell(stdout=True, stderr=True)
 
 # 特殊处理
 amrfinderplus_db = os.path.join(db_path, "amrfinderplus-db")
-pre_cmd = f"amrfinderplus --force_update --database {amrfinderplus_db}"
+pre_cmd = f"amrfinder_update --force_update --database {amrfinderplus_db}"
 
 # 执行命令
 shell(
