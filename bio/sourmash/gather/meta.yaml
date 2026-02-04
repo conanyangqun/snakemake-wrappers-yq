@@ -14,9 +14,9 @@ params:
     - extras: "(optional). extra arguments to program."
     - sourmash: "(optional). sourmash path. default is sourmash."
 demo:
-    fa:
-        name: "ecoliMG1655.fa.gz"
-        url: "https://osf.io/ruanf/download"
+    query:
+        name: "demo.fna.gz.sig"
+        url: "https://github.com/sourmash-bio/sourmash/raw/refs/heads/latest/tests/test-data/gather/GCF_000006945.2_ASM694v2_genomic.fna.gz.sig"
     db:
         name: "genbank-k31.lca.json.gz"
         url: "https://osf.io/4f8n3/download"

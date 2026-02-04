@@ -44,7 +44,7 @@ rule download_demo:
     shell:
         """
         # Download demo data
-        FASTA_URL='https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/017/325/GCF_000017325.1_ASM1732v1/GCF_000017325.1_ASM1732v1_genomic.fna.gz'
+        FASTA_URL='https://github.com/sourmash-bio/sourmash/raw/refs/heads/latest/tests/test-data/sketch_fromfile/GCA_903797575.1_PARATYPHIC668_genomic.fna.gz'
         
         if command -v wget >/dev/null 2>&1; then
             wget -O {output.demo_data} ${{FASTA_URL}}

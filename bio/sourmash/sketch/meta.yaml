@@ -13,6 +13,9 @@ params:
     - subcmd: "(optional). subcommand to run. default is 'dna', other options are fromfile, protein, translate."
     - extras: "(optional). extra arguments to program."
     - sourmash: "(optional). sourmash path. default is sourmash."
-demo: https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/017/325/GCF_000017325.1_ASM1732v1/GCF_000017325.1_ASM1732v1_genomic.fna.gz
+demo: 
+    data:
+        name: demo.fna.gz
+        url: https://github.com/sourmash-bio/sourmash/raw/refs/heads/latest/tests/test-data/sketch_fromfile/GCA_903797575.1_PARATYPHIC668_genomic.fna.gz
 notes:
     "we only support dna subcommand now."

@@ -28,28 +28,49 @@ if query or sample_info:
         raise ValueError(f"query or sample_info must be provided, but got {query} and {sample_info}")
 else:
     # Demo case
-    samples['demo'] = (os.path.join(out_dir, "ecoliMG1655.sig"), os.path.join(out_dir, "genbank-k31.lca.json.gz"))
+    samples['demo'] = (os.path.join(out_dir, "demo.fna.gz.sig"), os.path.join(out_dir, "genbank-k31.lca.json.gz"))
 
 # Rules
 rule all:
     input:
         csvs = [os.path.join(out_dir, s_id, f"{s_id}_gather.csv") for s_id in samples.keys()]
 
+# rule download_demo:
+#     output:
+#         ecoli_fasta = os.path.join(out_dir, "ecoliMG1655.fa.gz")
+#     log: os.path.join(out_dir, "logs", "download_demo.log")
+#     shell:
+#         """
+#         # Create logs directory
+#         mkdir -p {out_dir}/logs
+#         
+#         # Download E. coli FASTA file
+#         ECOLI_URL='https://osf.io/ruanf/download'
+#         if command -v wget >/dev/null 2>&1; then
+#             wget -O {out_dir}/ecoliMG1655.fa.gz ${{ECOLI_URL}}
+#         elif command -v curl >/dev/null 2>&1; then
+#             curl -L -o {out_dir}/ecoliMG1655.fa.gz ${{ECOLI_URL}}
+#         else
+#             echo "wget or curl is required to download demo data"
+#             exit 1
+#         fi
+#         """
+
 rule download_demo:
     output:
-        ecoli_fasta = os.path.join(out_dir, "ecoliMG1655.fa.gz")
+        demo_sig = os.path.join(out_dir, "demo.fna.gz.sig")
     log: os.path.join(out_dir, "logs", "download_demo.log")
     shell:
         """
         # Create logs directory
         mkdir -p {out_dir}/logs
         
-        # Download E. coli FASTA file
-        ECOLI_URL='https://osf.io/ruanf/download'
+        # Download demo signature file
+        DEMO_URL='https://github.com/sourmash-bio/sourmash/raw/refs/heads/latest/tests/test-data/gather/GCF_000006945.2_ASM694v2_genomic.fna.gz.sig'
         if command -v wget >/dev/null 2>&1; then
-            wget -O {out_dir}/ecoliMG1655.fa.gz ${{ECOLI_URL}}
+            wget -O {output.demo_sig} ${{DEMO_URL}}
         elif command -v curl >/dev/null 2>&1; then
-            curl -L -o {out_dir}/ecoliMG1655.fa.gz ${{ECOLI_URL}}
+            curl -L -o {output.demo_sig} ${{DEMO_URL}}
         else
             echo "wget or curl is required to download demo data"
             exit 1
@@ -77,17 +98,17 @@ rule download_db:
         fi
         """
 
-rule compute_signature:
-    input:
-        data = os.path.join(out_dir, "ecoliMG1655.fa.gz")
-    output:
-        sig = os.path.join(out_dir, "ecoliMG1655.sig")
-    params:
-        subcmd = "dna",
-        extras = "-p scaled=1000,k=31"
-    log: os.path.join(out_dir, "logs", "compute_signature.log")
-    wrapper:
-        "bio/sourmash/sketch"
+# rule compute_signature:
+#     input:
+#         data = os.path.join(out_dir, "ecoliMG1655.fa.gz")
+#     output:
+#         sig = os.path.join(out_dir, "ecoliMG1655.sig")
+#     params:
+#         subcmd = "dna",
+#         extras = "-p scaled=1000,k=31"
+#     log: os.path.join(out_dir, "logs", "compute_signature.log")
+#     wrapper:
+#         "bio/sourmash/sketch"
 
 # Define run_sourmash_gather rule
 rule run_sourmash_gather:
