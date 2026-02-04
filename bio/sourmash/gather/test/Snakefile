@@ -1,0 +1,104 @@
+# sourmash gather test case
+# This is a mini-workflow, can be called from other working directory.
+# Usage: 
+# snakemake --cores -s /xxx/Snakefile --config query=xxx db=xxx s_id=xxx sample_info=xxx out_dir=xxx
+# --wrapper-prefix file:///xxx/snakemake-wrappers-yq/
+
+import csv
+import os
+
+# Get parameters from config
+query = config.get('query', None)
+db = config.get('db', None)
+sample_id = config.get('s_id', "test")
+sample_info = config.get('sample_info', None) # tsv file, with s_id, query, db
+out_dir = config.get('out_dir', os.getcwd())
+samples = {} # s_id: (query, db)
+
+# Samples dictionary
+if query or sample_info:
+    if query:
+        samples[sample_id] = (query, db) if db else (query, os.path.join(out_dir, "genbank-k31.lca.json.gz"))
+    elif sample_info:
+        with open(sample_info, 'r') as f:
+            reader = csv.DictReader(f, delimiter='\t')
+            for row in reader:
+                samples[row['s_id']] = (row['query'], row['db']) if row['db'] else (row['query'], os.path.join(out_dir, "genbank-k31.lca.json.gz"))
+    else:
+        raise ValueError(f"query or sample_info must be provided, but got {query} and {sample_info}")
+else:
+    # Demo case
+    samples['demo'] = (os.path.join(out_dir, "ecoliMG1655.sig"), os.path.join(out_dir, "genbank-k31.lca.json.gz"))
+
+# Rules
+rule all:
+    input:
+        csvs = [os.path.join(out_dir, s_id, f"{s_id}_gather.csv") for s_id in samples.keys()]
+
+rule download_demo:
+    output:
+        ecoli_fasta = os.path.join(out_dir, "ecoliMG1655.fa.gz")
+    log: os.path.join(out_dir, "logs", "download_demo.log")
+    shell:
+        """
+        # Create logs directory
+        mkdir -p {out_dir}/logs
+        
+        # Download E. coli FASTA file
+        ECOLI_URL='https://osf.io/ruanf/download'
+        if command -v wget >/dev/null 2>&1; then
+            wget -O {out_dir}/ecoliMG1655.fa.gz ${{ECOLI_URL}}
+        elif command -v curl >/dev/null 2>&1; then
+            curl -L -o {out_dir}/ecoliMG1655.fa.gz ${{ECOLI_URL}}
+        else
+            echo "wget or curl is required to download demo data"
+            exit 1
+        fi
+        """
+
+rule download_db:
+    output:
+        db_file = os.path.join(out_dir, "genbank-k31.lca.json.gz")
+    log: os.path.join(out_dir, "logs", "download_db.log")
+    shell:
+        """
+        # Create logs directory
+        mkdir -p {out_dir}/logs
+        
+        # Download database file
+        DB_URL='https://osf.io/4f8n3/download'
+        if command -v wget >/dev/null 2>&1; then
+            wget -O {out_dir}/genbank-k31.lca.json.gz ${{DB_URL}}
+        elif command -v curl >/dev/null 2>&1; then
+            curl -L -o {out_dir}/genbank-k31.lca.json.gz ${{DB_URL}}
+        else
+            echo "wget or curl is required to download database"
+            exit 1
+        fi
+        """
+
+rule compute_signature:
+    input:
+        data = os.path.join(out_dir, "ecoliMG1655.fa.gz")
+    output:
+        sig = os.path.join(out_dir, "ecoliMG1655.sig")
+    params:
+        subcmd = "dna",
+        extras = "-p scaled=1000,k=31"
+    log: os.path.join(out_dir, "logs", "compute_signature.log")
+    wrapper:
+        "bio/sourmash/sketch"
+
+# Define run_sourmash_gather rule
+rule run_sourmash_gather:
+    input:
+        query = lambda wc: samples[wc.s_id][0],
+        db = lambda wc: samples[wc.s_id][1]
+    output:
+        csv = os.path.join(out_dir, "{s_id}", "{s_id}_gather.csv")
+    params:
+        extras = ""
+    log: os.path.join(out_dir, "logs", "{s_id}.run_sourmash_gather.log")
+    benchmark: os.path.join(out_dir, "{s_id}", "{s_id}.run_sourmash_gather.benchmark.txt")
+    wrapper:
+        "bio/sourmash/gather"

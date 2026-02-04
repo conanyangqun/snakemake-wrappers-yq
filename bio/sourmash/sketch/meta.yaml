@@ -1,0 +1,18 @@
+name: sourmash sketch
+description: make sourmash signatures from sequence data。
+url: https://sourmash.readthedocs.io/en/latest/index.html
+version: 4.9.4
+authors:
+    - yangqun (yangqun https://github.com/conanyangqun )
+    - TRAE (TRAE https://www.trae.cn/ )
+input:
+    - data: "(required). Input contig files, can be single (string) or multiple (list), fasta, fastq format, can be compressed with gzip, bgzip2."
+output:
+    - sig: "(required). Output sourmash signature file. Extension can be '.sig' or '.zip'."
+params:
+    - subcmd: "(optional). subcommand to run. default is 'dna', other options are fromfile, protein, translate."
+    - extras: "(optional). extra arguments to program."
+    - sourmash: "(optional). sourmash path. default is sourmash."
+demo: https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/017/325/GCF_000017325.1_ASM1732v1/GCF_000017325.1_ASM1732v1_genomic.fna.gz
+notes:
+    "we only support dna subcommand now."

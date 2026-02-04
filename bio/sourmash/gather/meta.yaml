@@ -1,0 +1,24 @@
+name: sourmash gather
+description: find metagenome members.
+url: https://sourmash.readthedocs.io/en/latest/index.html
+version: 4.9.4
+authors:
+    - yangqun (yangqun https://github.com/conanyangqun )
+    - TRAE (TRAE https://www.trae.cn/ )
+input:
+    - query: "(required). Input sourmash signature file."
+    - db: "(required). single signature file or list of signature files."
+output:
+    - csv: "(required). Output csv file."
+params:
+    - extras: "(optional). extra arguments to program."
+    - sourmash: "(optional). sourmash path. default is sourmash."
+demo:
+    fa:
+        name: "ecoliMG1655.fa.gz"
+        url: "https://osf.io/ruanf/download"
+    db:
+        name: "genbank-k31.lca.json.gz"
+        url: "https://osf.io/4f8n3/download"
+notes:
+    "we only expected sig file."

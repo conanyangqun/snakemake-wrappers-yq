@@ -255,3 +255,31 @@ def test_mlst(run):
             "all"
         ]
     )
+
+
+def test_sourmash_sketch(run):
+    run(
+        "bio/sourmash/sketch",
+        [
+            "snakemake",
+            "--cores",
+            "1",
+            "--use-conda",
+            "-F",
+            "all"
+        ]
+    )
+
+
+def test_sourmash_gather(run):
+    run(
+        "bio/sourmash/gather",
+        [
+            "snakemake",
+            "--cores",
+            "1",
+            "--use-conda",
+            "-F",
+            "all"
+        ]
+    )

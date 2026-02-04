@@ -1,0 +1,69 @@
+# sourmash sketch test case
+# This is a mini-workflow, can be called from other working directory.
+# Usage: 
+# snakemake --cores -s /xxx/Snakefile --config data=xxx s_id=xxx out_dir=xxx --wrapper-prefix file:///xxx/snakemake-wrappers-yq/
+# or for batch processing:
+# snakemake --cores -s /xxx/Snakefile --config sample_info=xxx out_dir=xxx --wrapper-prefix file:///xxx/snakemake-wrappers-yq/
+
+import csv
+import os
+
+# Get parameters from config
+data = config.get('data', None)
+sample_id = config.get('s_id', "test")
+sample_info = config.get('sample_info', None) # tsv file, with s_id, data
+samples = {} # s_id: data
+out_dir = config.get('out_dir', os.getcwd())
+demo_data = os.path.join(out_dir, "demo.fna.gz")
+
+# Samples dictionary
+if data or sample_info:
+    if data:
+        samples[sample_id] = data
+    elif sample_info:
+        with open(sample_info, 'r') as f:
+            reader = csv.DictReader(f, delimiter='\t')
+            for row in reader:
+                samples[row['s_id']] = row['data']
+    else:
+        raise ValueError(f"data or sample_info must be provided, but got {data} and {sample_info}")
+else:
+    # Demo case
+    samples['demo'] = demo_data
+
+# Rules
+rule all:
+    input:
+        sigs = [os.path.join(out_dir, "{s_id}", "{s_id}.sig").format(s_id=s_id) for s_id in samples.keys()]
+
+rule download_demo:
+    output:
+        demo_data = demo_data
+    log:
+        os.path.join(out_dir, "logs", "download_demo.log")
+    shell:
+        """
+        # Download demo data
+        FASTA_URL='https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/017/325/GCF_000017325.1_ASM1732v1/GCF_000017325.1_ASM1732v1_genomic.fna.gz'
+        
+        if command -v wget >/dev/null 2>&1; then
+            wget -O {output.demo_data} ${{FASTA_URL}}
+        elif command -v curl >/dev/null 2>&1; then
+            curl -L -o {output.demo_data} ${{FASTA_URL}}
+        else
+            echo "wget or curl is required to download demo data"
+            exit 1
+        fi
+        """
+
+# Define run_sourmash_sketch rule
+rule run_sourmash_sketch:
+    input:
+        data = lambda wc: samples[wc.s_id],
+    output:
+        sig = os.path.join(out_dir, "{s_id}", "{s_id}.sig")
+    benchmark: os.path.join(out_dir, "{s_id}", "{s_id}.benchmarks.sketch.txt")
+    log:
+        os.path.join(out_dir, "logs", "{s_id}.run_sourmash_sketch.log")
+    wrapper:
+        "bio/sourmash/sketch"
