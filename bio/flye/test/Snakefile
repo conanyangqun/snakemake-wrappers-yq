@@ -57,5 +57,6 @@ rule flye_ont_data:
     params:
         input_type = lambda wc: samples[wc.s_id][0],
         extras = "-i 5",
+    benchmark: os.path.join(out_dir, "{s_id}", "benchmarks", "flye_ont_data.benchmark.txt")
     wrapper:
         "bio/flye"
