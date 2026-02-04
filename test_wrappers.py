@@ -242,3 +242,16 @@ def test_mob_recon(run):
             "all"
         ]
     )
+
+def test_mlst(run):
+    run(
+        "bio/mlst",
+        [
+            "snakemake",
+            "--cores",
+            "1",
+            "--use-conda",
+            "-F",
+            "all"
+        ]
+    )
