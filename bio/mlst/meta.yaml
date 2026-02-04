@@ -1,0 +1,17 @@
+name: mlst
+description: Scan contig files against PubMLST typing schemes.
+url: https://github.com/tseemann/mlst
+version: v2.32.2
+authors:
+    - yangqun (yangqun https://github.com/conanyangqun )
+    - TRAE (TRAE https://www.trae.cn/ )
+input:
+    - contigs: "(required). Input contig files, can be single (string) or multiple (list), fasta, gbk, embl format, can be compressed with gzip."
+output:
+    - report: "(required). Output report file. Extension must be '.tsv' or '.csv'."
+    - json: "(optional). output json file."
+params:
+    - extras: "(optional). extra arguments to program."
+    - mlst: "(optional). mlst path. default is mlst."
+demo: https://github.com/tseemann/mlst/raw/refs/heads/master/test/example.fna
+notes:

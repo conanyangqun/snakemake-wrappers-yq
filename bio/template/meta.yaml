@@ -1,8 +1,10 @@
 name:
 description:
 url:
+version:
 authors:
 input:
 output:
 params:
+demo:
 notes:
