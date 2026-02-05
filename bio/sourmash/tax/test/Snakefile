@@ -73,9 +73,9 @@ rule download_demo_taxonomy:
 
         # Download taxonomy csv file
         if command -v wget >/dev/null 2>&1; then
-            wget -O bacteria_refseq_lineage.csv "${TAXONOMY_URL}"
+            wget -O bacteria_refseq_lineage.csv "${{TAXONOMY_URL}}"
         elif command -v curl >/dev/null 2>&1; then
-            curl -L -o bacteria_refseq_lineage.csv "${TAXONOMY_URL}"
+            curl -L -o bacteria_refseq_lineage.csv "${{TAXONOMY_URL}}"
         else
             echo "wget or curl is required to download taxonomy data"
             exit 1
