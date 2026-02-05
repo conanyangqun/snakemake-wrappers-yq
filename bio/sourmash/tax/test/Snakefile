@@ -1,0 +1,96 @@
+# sourmash tax test case
+# This is a mini-workflow, can be called from other working directory.
+# Usage: 
+# For single sample: snakemake --cores -s /xxx/Snakefile --config gather_csv=xxx taxonomy_csv=xxx out_dir=xxx s_id=sample1
+# For multiple samples: snakemake --cores -s /xxx/Snakefile --config sample_info=xxx  out_dir=xxx
+# --wrapper-prefix file:///xxx/snakemake-wrappers-yq/
+
+import os
+import csv
+
+# Get parameters from config
+gather_csv = config.get('gather_csv', None)
+taxonomy_csv = config.get('taxonomy_csv', None)
+out_dir = config.get('out_dir', os.getcwd())
+s_id = config.get('s_id', None)
+sample_info = config.get('sample_info', None) # with s_id, gather_csv, taxonomy_csv
+
+# Samples dictionary
+samples = {}
+
+# Handle single sample case
+if gather_csv:
+    if taxonomy_csv and s_id:
+        samples[s_id] = (gather_csv, taxonomy_csv)
+    else:
+        raise ValueError("s_id and taxonomy_csv are required when gather_csv is provided.")
+# Handle multiple samples case
+elif sample_info:
+    with open(sample_info, 'r') as f:
+        reader = csv.DictReader(f, delimiter='\t')
+        for row in reader:
+            if not row['taxonomy_csv']:
+                raise ValueError(f"taxonomy_csv is required for sample {row['s_id']}")
+            samples[row['s_id']] = (row['gather_csv'], row['taxonomy_csv'])
+# Demo case
+else:
+    s_id = 'demo'
+    gather_csv = os.path.join(out_dir, "demo.gather.csv")
+    taxonomy_csv = os.path.join(out_dir, "bacteria_refseq_lineage.csv")
+    samples[s_id] = (gather_csv, taxonomy_csv)
+
+# Rules
+rule all:
+    input:
+        tax_csvs = [os.path.join(out_dir, f"{s_id}.gather.new.with-lineages.csv") for s_id in samples.keys()]
+
+rule download_demo_gather:
+    output:
+        gather_csv = os.path.join(out_dir, "demo.gather.csv")
+    log: os.path.join(out_dir, "logs", "download_demo_gather.log")
+    shell:
+        """
+        GATHER_URL='https://github.com/sourmash-bio/sourmash/raw/refs/heads/latest/tests/test-data/tax/test1.gather.csv'
+        
+        # Download gather csv file
+        if command -v wget >/dev/null 2>&1; then
+            wget -O demo.gather.csv "${{GATHER_URL}}"
+        elif command -v curl >/dev/null 2>&1; then
+            curl -L -o demo.gather.csv "${{GATHER_URL}}"
+        else
+            echo "wget or curl is required to download demo data"
+            exit 1
+        fi
+        """
+
+rule download_demo_taxonomy:
+    output:
+        taxonomy_csv = os.path.join(out_dir, "bacteria_refseq_lineage.csv")
+    log: os.path.join(out_dir, "logs", "download_demo_taxonomy.log")
+    shell:
+        """
+        TAXONOMY_URL='https://github.com/sourmash-bio/sourmash/raw/refs/heads/latest/tests/test-data/tax/bacteria_refseq_lineage.csv'
+
+        # Download taxonomy csv file
+        if command -v wget >/dev/null 2>&1; then
+            wget -O bacteria_refseq_lineage.csv "${TAXONOMY_URL}"
+        elif command -v curl >/dev/null 2>&1; then
+            curl -L -o bacteria_refseq_lineage.csv "${TAXONOMY_URL}"
+        else
+            echo "wget or curl is required to download taxonomy data"
+            exit 1
+        fi
+        """
+
+# Define run_sourmash_tax rule
+rule run_sourmash_tax:
+    input:
+        gather_csv = lambda wc: samples[wc.s_id][0],
+        taxonomy_csv = lambda wc: samples[wc.s_id][1]
+    output:
+        tax_csv = os.path.join(out_dir, "{s_id}.gather.new.with-lineages.csv")
+    params:
+        extras = "",
+    log: os.path.join(out_dir, "logs", "{s_id}.run_sourmash_tax.log")
+    wrapper:
+        "bio/sourmash/tax"

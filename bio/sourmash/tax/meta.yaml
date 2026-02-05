@@ -1,0 +1,25 @@
+name: sourmash tax
+description: annotates gather output with taxonomy.
+url: https://sourmash.readthedocs.io/en/latest/index.html
+version: 4.9.4
+authors:
+    - yangqun (yangqun https://github.com/conanyangqun )
+    - TRAE (TRAE https://www.trae.cn/ )
+input:
+    - gather_csv: "(required). Input gather csv file, only support single file now."
+    - taxonomy_csv: "(required). Input taxonomy file, can be single (string) or multiple (list)."
+output:
+    - tax_csv: "(required). Output tax csv file, must be end with '.with-lineages.csv'. We use this file to decide output directory."
+params:
+    - extras: "(optional). extra arguments to program."
+    - sourmash: "(optional). sourmash path. default is sourmash."
+demo:
+    gather_csv:
+        name: demo.gather.csv
+        url: https://github.com/sourmash-bio/sourmash/raw/refs/heads/latest/tests/test-data/tax/test1.gather.csv
+    taxonomy_csv:
+        name: bacteria_refseq_lineage.csv
+        url: https://github.com/sourmash-bio/sourmash/raw/refs/heads/latest/tests/test-data/tax/bacteria_refseq_lineage.csv
+notes:
+    - "We do not support multiple gather_csv files now, because we use tax_csv to decide output directory, and use its basename(after removing .with-lineages.csv) to temporarily store gather_csv file to output directory."
+    - "gather_csv basename must not be same as tax_csv basename without .with-lineages.csv suffix."

@@ -283,3 +283,17 @@ def test_sourmash_gather(run):
             "all"
         ]
     )
+
+
+def test_sourmash_tax(run):
+    run(
+        "bio/sourmash/tax",
+        [
+            "snakemake",
+            "--cores",
+            "1",
+            "--use-conda",
+            "-F",
+            "all"
+        ]
+    )
